@@ -1,29 +1,82 @@
 {
   "expo": {
-    "name": "fletero-app",
+    "name": "Fletero",
     "slug": "fletero-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#1A2B44"
     },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.fletero-app",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Fletero necesita acceso a tu ubicación para mostrar fletes cercanos y seguimiento en tiempo real",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Fletero necesita acceso a tu ubicación para seguimiento en tiempo real durante los trabajos",
+        "NSCameraUsageDescription": "Necesitamos acceso a la cámara para tomar fotos de documentos y vehículos",
+        "NSPhotoLibraryUsageDescription": "Necesitamos acceso a la galería para seleccionar fotos de documentos",
+        "NSMicrophoneUsageDescription": "Necesitamos acceso al micrófono para grabaciones de voz en mensajes",
+        "UIBackgroundModes": ["location", "remote-notification"]
+      },
+      "config": {
+        "usesNonExemptEncryption": false
+      },
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "package": "com.fletero.app",
+      "versionCode": 1,
+      "googleServicesFile": "./google-services.json",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermissionPrompt": "Permitir que Fletero use Face ID"
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#ffffff"
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Permitir que Fletero acceda a tu ubicación para mostrar fletes cercanos y seguimiento en tiempo real."
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "1e00c82f-a08c-4f8d-a395-7aa2554491de"
+      }
     }
   }
-}
+} 
