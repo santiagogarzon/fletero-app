@@ -5,6 +5,7 @@ import LoginScreen from "../screens/auth/LoginScreen";
 import RegisterScreen from "../screens/auth/RegisterScreen";
 import RoleSelectionScreen from "../screens/auth/RoleSelectionScreen";
 import DriverSetupScreen from "../screens/auth/DriverSetupScreen";
+import ConvertAnonymousScreen from "../screens/auth/ConvertAnonymousScreen";
 import FirebaseTestScreen from "../screens/FirebaseTestScreen";
 
 const Stack = createNativeStackNavigator();
@@ -22,6 +23,11 @@ export default function AuthNavigator() {
       <Stack.Screen name="Register" component={RegisterScreen} />
       <Stack.Screen name="RoleSelection" component={RoleSelectionScreen} />
       <Stack.Screen name="DriverSetup" component={DriverSetupScreen} />
+      <Stack.Screen
+        name="ConvertAnonymous"
+        component={ConvertAnonymousScreen}
+        options={{ headerShown: true, title: "Crear Cuenta Completa" }}
+      />
       <Stack.Screen
         name="FirebaseTest"
         component={FirebaseTestScreen}

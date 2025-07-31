@@ -1,6 +1,6 @@
 # Firebase Setup Guide for Fletero App
 
-## 🔥 **Current Issue**
+## �� **Current Issue**
 
 Your Firebase project `fletero-app-e7b3c` is not properly configured or doesn't exist.
 
@@ -22,10 +22,14 @@ Your Firebase project `fletero-app-e7b3c` is not properly configured or doesn't 
 4. Click **"Email/Password"**
 5. Enable **"Email/Password"** provider
 6. Click **"Save"**
+7. **Enable Anonymous Authentication:**
+   - Click **"Anonymous"** provider
+   - Enable **"Anonymous"** authentication
+   - Click **"Save"**
 
 ### **3. Create Firestore Database**
 
-1. In your Firebase project dashboard, click **"Firestore Database"** in the left sidebar
+1. Go to **Firestore Database**
 2. Click **"Create database"**
 3. Choose **"Start in test mode"** (for development)
 4. Select a location (choose closest to Argentina, e.g., `us-central1`)
@@ -120,6 +124,22 @@ service firebase.storage {
 }
 ```
 
+## 🔐 **Anonymous Authentication Features**
+
+### **What's Available:**
+
+- ✅ **Anonymous Sign In** - Users can explore the app without creating an account
+- ✅ **Browse Freight Requests** - View available freight requests
+- ✅ **Basic App Navigation** - Access all screens and features
+- ✅ **Convert to Full Account** - Upgrade anonymous account to permanent account
+
+### **What's Limited:**
+
+- ❌ **Create Freight Requests** - Requires full account
+- ❌ **Send Offers** - Requires driver account
+- ❌ **Make Payments** - Requires full account
+- ❌ **Save Preferences** - Limited persistence
+
 ## 🧪 **Testing**
 
 1. Start the app: `npm start`
@@ -137,13 +157,18 @@ service firebase.storage {
    - Authentication not enabled
    - Wrong project ID
 
-2. **Firestore connection errors**
+2. **"auth/operation-not-allowed"**
+
+   - Anonymous authentication not enabled
+   - Email/Password authentication not enabled
+
+3. **Firestore connection errors**
 
    - Database not created
    - Wrong security rules
    - Network issues
 
-3. **API key restrictions**
+4. **API key restrictions**
    - Check Firebase Console → Project Settings → General
    - Verify API key restrictions
 
@@ -175,7 +200,9 @@ If you're still having issues:
 
 Once Firebase is working:
 
-1. Test user registration and login
-2. Test creating freight requests
-3. Test real-time updates
-4. Set up production security rules
+1. Test anonymous sign-in
+2. Test user registration and login
+3. Test account conversion from anonymous to permanent
+4. Test creating freight requests
+5. Test real-time updates
+6. Set up production security rules

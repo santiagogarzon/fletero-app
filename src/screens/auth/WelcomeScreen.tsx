@@ -1,12 +1,32 @@
 import * as React from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import { useAuthStore } from "../../store/authStore";
 import Button from "../../components/Button";
 
 export default function WelcomeScreen() {
   const navigation = useNavigation();
+  const { signInAnonymously, isLoading } = useAuthStore();
+
+  const handleAnonymousSignIn = async () => {
+    try {
+      await signInAnonymously();
+      Alert.alert(
+        "¡Bienvenido!",
+        "Has ingresado como usuario anónimo. Puedes explorar la app y crear una cuenta completa más tarde.",
+        [
+          {
+            text: "Entendido",
+            onPress: () => (navigation as any).navigate("Main"),
+          },
+        ]
+      );
+    } catch (error: any) {
+      Alert.alert("Error", error.message || "Error al ingresar anónimamente");
+    }
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -65,6 +85,15 @@ export default function WelcomeScreen() {
               onPress={() => (navigation as any).navigate("Login")}
               variant="outline"
               fullWidth
+            />
+
+            {/* Anonymous Sign In */}
+            <Button
+              title="Explorar sin cuenta"
+              onPress={handleAnonymousSignIn}
+              variant="outline"
+              fullWidth
+              loading={isLoading}
             />
 
             {/* Debug button - remove in production */}
