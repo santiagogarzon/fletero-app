@@ -1,36 +1,29 @@
 {
   "expo": {
-    "name": "Fletero",
+    "name": "Fletero App",
     "slug": "fletero-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#1A2B44"
+      "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.fletero-app",
-      "buildNumber": "1",
+      "bundleIdentifier": "com.fletero.app",
+      "googleServicesFile": "./GoogleService-Info.plist",
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "Fletero necesita acceso a tu ubicación para mostrar fletes cercanos y seguimiento en tiempo real",
-        "NSLocationAlwaysAndWhenInUseUsageDescription": "Fletero necesita acceso a tu ubicación para seguimiento en tiempo real durante los trabajos",
-        "NSCameraUsageDescription": "Necesitamos acceso a la cámara para tomar fotos de documentos y vehículos",
-        "NSPhotoLibraryUsageDescription": "Necesitamos acceso a la galería para seleccionar fotos de documentos",
-        "NSMicrophoneUsageDescription": "Necesitamos acceso al micrófono para grabaciones de voz en mensajes",
-        "UIBackgroundModes": ["location", "remote-notification"]
-      },
-      "config": {
-        "usesNonExemptEncryption": false
-      },
-      "googleServicesFile": "./GoogleService-Info.plist"
+        "NSLocationWhenInUseUsageDescription": "Esta app necesita acceso a tu ubicación para mostrar servicios de transporte cercanos y permitirte seleccionar puntos de origen y destino en el mapa.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Esta app necesita acceso a tu ubicación para mostrar servicios de transporte cercanos y permitirte seleccionar puntos de origen y destino en el mapa.",
+        "UIBackgroundModes": ["location", "fetch"]
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -38,25 +31,29 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.fletero.app",
-      "versionCode": 1,
       "googleServicesFile": "./google-services.json",
       "permissions": [
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION",
-        "CAMERA",
-        "READ_EXTERNAL_STORAGE",
-        "WRITE_EXTERNAL_STORAGE",
-        "RECORD_AUDIO"
-      ]
+        "INTERNET",
+        "ACCESS_NETWORK_STATE"
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBvA8PdrQWD1nPeFoRB-H3cHP81HOgCmog"
+        }
+      }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
     },
     "plugins": [
+      "expo-router",
       [
-        "expo-local-authentication",
+        "expo-location",
         {
-          "faceIDPermissionPrompt": "Permitir que Fletero use Face ID"
+          "locationAlwaysAndWhenInUsePermission": "Esta app necesita acceso a tu ubicación para mostrar servicios de transporte cercanos y permitirte seleccionar puntos de origen y destino en el mapa."
         }
       ],
       [
@@ -65,17 +62,14 @@
           "icon": "./assets/notification-icon.png",
           "color": "#ffffff"
         }
-      ],
-      [
-        "expo-location",
-        {
-          "locationAlwaysAndWhenInUsePermission": "Permitir que Fletero acceda a tu ubicación para mostrar fletes cercanos y seguimiento en tiempo real."
-        }
       ]
     ],
     "extra": {
+      "router": {
+        "origin": false
+      },
       "eas": {
-        "projectId": "1e00c82f-a08c-4f8d-a395-7aa2554491de"
+        "projectId": "your-project-id"
       }
     }
   }

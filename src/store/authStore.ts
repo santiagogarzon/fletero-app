@@ -10,6 +10,7 @@ interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
+  isInitialized: boolean; // Track if auth has been initialized
 }
 
 interface AuthActions {
@@ -29,6 +30,7 @@ interface AuthActions {
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
   clearError: () => void;
+  setInitialized: (initialized: boolean) => void;
   initializeAuth: () => Promise<() => void>;
 }
 
@@ -43,6 +45,7 @@ export const useAuthStore = create<AuthStore>()(
       isAuthenticated: false,
       isLoading: false,
       error: null,
+      isInitialized: false,
 
       // Firebase Auth Actions
       signInAnonymously: async () => {
@@ -258,19 +261,26 @@ export const useAuthStore = create<AuthStore>()(
         set({ error: null });
       },
 
+      setInitialized: (initialized: boolean) => {
+        set({ isInitialized: initialized });
+      },
+
       // Initialize auth state listener
       initializeAuth: async () => {
         try {
-          set({ isLoading: true, error: null });
+          set({ isLoading: true, error: null, isInitialized: false });
 
           // Set up Firebase auth state listener
           const unsubscribe = AuthService.onAuthStateChanged(async (user) => {
+            console.log('Auth state changed:', user ? 'User logged in' : 'User logged out');
+            
             if (user) {
               set({
                 user,
                 isAuthenticated: true,
                 isLoading: false,
                 error: null,
+                isInitialized: true,
               });
             } else {
               set({
@@ -279,6 +289,7 @@ export const useAuthStore = create<AuthStore>()(
                 isAuthenticated: false,
                 isLoading: false,
                 error: null,
+                isInitialized: true,
               });
             }
           });
@@ -288,6 +299,7 @@ export const useAuthStore = create<AuthStore>()(
           set({
             error: error.message,
             isLoading: false,
+            isInitialized: true,
           });
           throw error;
         }
@@ -300,7 +312,18 @@ export const useAuthStore = create<AuthStore>()(
         user: state.user,
         driverProfile: state.driverProfile,
         isAuthenticated: state.isAuthenticated,
+        isInitialized: state.isInitialized,
       }),
+      onRehydrateStorage: () => (state) => {
+        // This runs after the store is rehydrated from storage
+        if (state) {
+          console.log('Auth store rehydrated:', {
+            isAuthenticated: state.isAuthenticated,
+            user: state.user?.name,
+            isInitialized: state.isInitialized,
+          });
+        }
+      },
     }
   )
 );

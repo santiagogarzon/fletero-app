@@ -1,315 +1,305 @@
-# Fletero App 🚛
+# Fletero App - Plataforma de Transporte
 
-Una plataforma móvil para conectar consumidores con fleteros (conductores de carga) en Argentina, similar a Uber pero para servicios de transporte de mercancías.
+Una aplicación móvil completa para conectar consumidores con conductores de transporte de carga (fletes) en Argentina.
 
 ## 🚀 Características Principales
 
-### 👤 **Flujo del Consumidor**
+### Para Consumidores
 
-- **Crear solicitudes de flete** con detalles completos
-- **Seleccionar ubicaciones** de origen y destino
-- **Especificar tipo de propiedad** (casa/apartamento)
-- **Indicar necesidad de ayuda** y dificultad de escaleras
-- **Calcular volumen automático** de los artículos
-- **Recibir ofertas** de fleteros
-- **Pagar con MercadoPago** de forma segura
-- **Seguimiento en tiempo real** del fletero
-- **Calificar el servicio** y ver historial
+- **Solicitudes de Flete**: Formulario completo para crear solicitudes de transporte
+- **Selección de Ubicaciones**: Integración con Google Maps para origen y destino
+- **Cálculo Automático de Volumen**: Estimación automática basada en items seleccionados
+- **Gestión de Solicitudes**: Ver, editar y cancelar solicitudes
+- **Seguimiento en Tiempo Real**: Monitoreo de la ubicación del conductor
+- **Sistema de Pagos**: Integración con MercadoPago
+- **Calificaciones**: Evaluar servicios recibidos
 
-### 🚛 **Flujo del Fletero**
+### Para Conductores (Fleteros)
 
-- **Configurar perfil** con tipo de vehículo y capacidad
-- **Ver solicitudes cercanas** disponibles
-- **Enviar ofertas** con precios y tiempos estimados
-- **Gestionar trabajos asignados**
-- **Compartir ubicación** durante el trabajo
-- **Recibir pagos** y calificar consumidores
-- **Ver historial** y estadísticas de ganancias
+- **Perfil Completo**: Configuración de vehículo y capacidades
+- **Ofertas de Trabajo**: Ver solicitudes cercanas y enviar ofertas
+- **Gestión de Trabajos**: Aceptar, iniciar y completar trabajos
+- **Navegación**: Integración con mapas para rutas
+- **Ganancias**: Seguimiento de ingresos y estadísticas
+- **Calificaciones**: Evaluar clientes
 
-## 🛠 **Stack Tecnológico**
+## 🛠 Tecnologías Utilizadas
 
 - **React Native** con Expo
-- **Firebase** (Auth, Firestore, Storage, Messaging)
-- **NativeWind** (Tailwind CSS para React Native)
+- **TypeScript** para type safety
+- **Tailwind CSS** (NativeWind) para estilos
 - **Zustand** para gestión de estado
+- **Firebase** (Auth, Firestore, Storage)
 - **React Navigation** para navegación
+- **Expo Location** para geolocalización
+- **React Native Maps** para mapas
 - **DayJS** para manejo de fechas
-- **TypeScript** para tipado estático
-- **AsyncStorage** para persistencia local
 
-## 🔥 **Firebase Integration**
+## 📱 Pantallas Principales
 
-### **Servicios Configurados**
+### Autenticación
 
-- ✅ **Authentication** - Registro, login y gestión de usuarios
-- ✅ **Firestore** - Base de datos en tiempo real
-- ✅ **Storage** - Almacenamiento de archivos y documentos
-- ✅ **Messaging** - Notificaciones push
-- ✅ **Real-time Updates** - Sincronización en tiempo real
+- **WelcomeScreen**: Pantalla de bienvenida con opción de acceso anónimo
+- **LoginScreen**: Inicio de sesión con email/contraseña
+- **RegisterScreen**: Registro de nuevos usuarios
+- **RoleSelectionScreen**: Selección de rol (Consumidor/Conductor)
+- **ConvertAnonymousScreen**: Conversión de cuenta anónima a permanente
 
-### **Estructura de Datos**
+### Consumidor
 
-```
-users/
-  ├── {userId}/
-  │   ├── profile (User data)
-  │   └── driverProfile (Driver specific data)
+- **ConsumerHomeScreen**: Pantalla principal del consumidor
+- **FreightRequestScreen**: **NUEVA** - Formulario completo para crear solicitudes de flete
+- **MyRequestsScreen**: Lista de solicitudes creadas
+- **HistoryScreen**: Historial de servicios
 
-freightRequests/
-  ├── {requestId}/
-  │   ├── consumerId
-  │   ├── origin/destination
-  │   ├── items
-  │   └── status
+### Conductor
 
-offers/
-  ├── {offerId}/
-  │   ├── requestId
-  │   ├── driverId
-  │   ├── price
-  │   └── status
+- **AvailableRequestsScreen**: Solicitudes disponibles para ofertar
+- **MyJobsScreen**: Trabajos asignados
+- **EarningsScreen**: Ganancias y estadísticas
 
-jobs/
-  ├── {jobId}/
-  │   ├── requestId
-  │   ├── consumerId/driverId
-  │   ├── status
-  │   └── tracking
-```
+### Navegación
 
-## 📱 **Estructura del Proyecto**
+- **RootNavigator**: Navegación principal con autenticación
+- **AuthNavigator**: Navegación de autenticación
+- **MainNavigator**: Navegación principal de la app
+- **ConsumerNavigator**: Tabs para consumidores
+- **DriverNavigator**: Tabs para conductores
 
-```
-src/
-├── components/          # Componentes reutilizables
-│   ├── Button.tsx      # Botón personalizable
-│   ├── Input.tsx       # Campo de entrada
-│   └── Card.tsx        # Tarjeta contenedora
-├── navigation/         # Configuración de navegación
-│   ├── RootNavigator.tsx
-│   ├── AuthNavigator.tsx
-│   ├── MainNavigator.tsx
-│   ├── ConsumerNavigator.tsx
-│   ├── DriverNavigator.tsx
-│   └── types.ts
-├── screens/           # Pantallas de la aplicación
-│   ├── auth/         # Autenticación
-│   ├── consumer/     # Pantallas del consumidor
-│   ├── driver/       # Pantallas del fletero
-│   └── shared/       # Pantallas compartidas
-├── services/         # Servicios Firebase
-│   ├── authService.ts
-│   ├── freightService.ts
-│   ├── storageService.ts
-│   └── notificationService.ts
-├── store/            # Estado global (Zustand)
-│   ├── authStore.ts  # Estado de autenticación
-│   └── freightStore.ts # Estado de fletes
-├── types/            # Tipos TypeScript
-│   └── index.ts
-├── utils/            # Utilidades
-│   ├── dateUtils.ts  # Manejo de fechas
-│   ├── volumeCalculator.ts # Cálculo de volúmenes
-│   └── cn.ts         # Utilidad para clases CSS
-└── config/           # Configuraciones
-    └── firebase.ts   # Configuración Firebase
-```
+## 🗺 FreightRequestScreen - Nueva Funcionalidad
 
-## 🎨 **Diseño y UX**
+### Características del Formulario de Solicitud
 
-- **Mobile-first** con diseño responsivo
-- **Paleta de colores** profesional y accesible
-- **Iconografía** consistente con Ionicons
-- **Navegación intuitiva** con tabs y stack navigation
-- **Feedback visual** con estados de carga y errores
-- **Formularios validados** con mensajes de error claros
+#### 1. Tipo de Propiedad
 
-## 🔐 **Autenticación Firebase**
+- **Casa o Departamento**: Selección con radio buttons
+- **Opciones para Departamentos**:
+  - ¿Necesita ayuda para cargar? (Toggle)
+  - Tipo de Ascensor: Ninguno / Pequeño / Grande
+  - Dificultad de Escaleras: Fácil / Angosta / Difícil
 
-- **Registro** con validación de campos
-- **Inicio de sesión** con persistencia
-- **Selección de rol** (Consumidor/Fletero)
-- **Configuración de perfil** para fleteros
-- **Sesión persistente** con AsyncStorage
-- **Recuperación de contraseña** por email
+#### 2. Items a Transportar
 
-## 📊 **Estado Global con Firebase**
+- **Número de Cajas**: Input numérico
+- **Muebles y Electrodomésticos**: Checkboxes para:
+  - Heladera, Cama, Colchón, Mesa, Sillas
+  - Lavarropas, Sofá, TV, Escritorio, Ropero
+- **Otros Items**: Campo de texto libre
+- **Cálculo Automático**: Volumen estimado en m³
 
-### AuthStore
+#### 3. Ubicaciones
 
-- Usuario autenticado (Firebase Auth)
-- Perfil del fletero (Firestore)
-- Estado de carga
-- Manejo de errores
+- **Integración con Google Maps**: Selección visual de origen y destino
+- **Geocodificación**: Conversión automática de coordenadas a direcciones
+- **Ubicación Actual**: Botón para usar ubicación actual
+- **Marcadores**: Origen (verde) y Destino (rojo)
 
-### FreightStore
+#### 4. Fecha y Hora
 
-- Solicitudes de flete (Firestore)
-- Ofertas y trabajos (Firestore)
-- Filtros y búsquedas
-- Historial de actividades
-- Actualizaciones en tiempo real
+- **DatePicker**: Selección de fecha preferida
+- **TimePicker**: Selección de hora preferida
+- **Validación**: Fecha debe ser futura
 
-## 🚀 **Instalación y Uso**
+#### 5. Validación y Envío
 
-### **Prerrequisitos**
+- **Validación Completa**: Todos los campos requeridos
+- **Mensajes de Error**: Feedback claro al usuario
+- **Integración con Zustand**: Almacenamiento en estado global
+- **Navegación**: Redirección a lista de solicitudes
 
-- Node.js (v18 o superior)
+### Componentes Utilizados
+
+- **Input**: Campos de texto con validación
+- **Button**: Botones con estados de carga
+- **Card**: Contenedores con estilo consistente
+- **MapView**: Integración con react-native-maps
+- **DateTimePicker**: Selectores de fecha y hora
+
+## 🔧 Configuración
+
+### Prerrequisitos
+
+- Node.js >= 18.17
+- npm o yarn
 - Expo CLI
-- Firebase project configurado
+- Cuenta de Firebase
+- Google Maps API Key
 
-### **1. Clonar el repositorio**
+### Instalación
+
+1. **Clonar el repositorio**
 
 ```bash
 git clone <repository-url>
 cd fletero-app
 ```
 
-### **2. Instalar dependencias**
+2. **Instalar dependencias**
 
 ```bash
 npm install
 ```
 
-### **3. Configurar Firebase**
-
-- Crear proyecto en [Firebase Console](https://console.firebase.google.com)
-- Descargar `GoogleService-Info.plist` (iOS) y `google-services.json` (Android)
-- Colocar archivos en la raíz del proyecto
-- Actualizar configuración en `src/config/firebase.ts`
-
-### **4. Configurar variables de entorno**
+3. **Configurar variables de entorno**
 
 ```bash
-# Crear archivo .env
-FIREBASE_API_KEY=your_api_key
-FIREBASE_PROJECT_ID=your_project_id
-FIREBASE_STORAGE_BUCKET=your_storage_bucket
-FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-FIREBASE_APP_ID=your_app_id
+# Copiar el archivo de ejemplo
+cp .env.example .env
+
+# Editar el archivo .env con tus credenciales
+nano .env
 ```
 
-### **5. Iniciar el servidor de desarrollo**
+#### Variables de Entorno Requeridas
+
+```bash
+# Google Maps API Key (REQUERIDO)
+GOOGLE_MAPS_API_KEY=tu_api_key_de_google_maps
+
+# Firebase Configuration (opcional, si usas variables de entorno)
+# FIREBASE_API_KEY=tu_firebase_api_key
+# FIREBASE_AUTH_DOMAIN=tu_firebase_auth_domain
+# FIREBASE_PROJECT_ID=tu_firebase_project_id
+# FIREBASE_STORAGE_BUCKET=tu_firebase_storage_bucket
+# FIREBASE_MESSAGING_SENDER_ID=tu_firebase_messaging_sender_id
+# FIREBASE_APP_ID=tu_firebase_app_id
+
+# App Configuration
+APP_NAME=Fletero App
+APP_VERSION=1.0.0
+```
+
+4. **Configurar Firebase**
+
+- Crear proyecto en Firebase Console
+- Habilitar Authentication (Email/Password + Anonymous)
+- Crear Firestore Database
+- Configurar reglas de seguridad
+- Actualizar `src/config/firebase.ts`
+
+5. **Configurar Google Maps**
+
+- Obtener API Key de Google Cloud Console
+- Habilitar Maps SDK para Android e iOS
+- Configurar restricciones de API key
+- Actualizar `app.json` con la API Key
+
+6. **Ejecutar la aplicación**
 
 ```bash
 npm start
 ```
 
-### **6. Ejecutar en dispositivo/simulador**
+## 📁 Estructura del Proyecto
 
-```bash
-# iOS
-npm run ios
-
-# Android
-npm run android
+```
+src/
+├── components/          # Componentes reutilizables
+├── config/             # Configuración (Firebase, env, etc.)
+│   ├── firebase.ts     # Configuración de Firebase
+│   └── env.ts          # Variables de entorno
+├── navigation/         # Navegación y tipos
+├── screens/           # Pantallas de la aplicación
+│   ├── auth/         # Pantallas de autenticación
+│   ├── consumer/     # Pantallas para consumidores
+│   └── driver/       # Pantallas para conductores
+├── services/         # Servicios (Firebase, etc.)
+├── store/           # Zustand stores
+├── types/           # TypeScript types
+└── utils/           # Utilidades (fechas, cálculos, etc.)
 ```
 
-## 📋 **Funcionalidades Implementadas**
+## 🎨 Diseño y UX
 
-### ✅ **Completadas**
+### Principios de Diseño
 
-- [x] Estructura de navegación completa
-- [x] Autenticación Firebase completa
-- [x] Registro y login con validación
-- [x] Selección de roles
-- [x] Configuración de perfil de fletero
-- [x] Pantalla principal del consumidor
-- [x] Componentes reutilizables
-- [x] Gestión de estado con Zustand + Firebase
-- [x] Utilidades de fecha y volumen
-- [x] Tipos TypeScript completos
-- [x] Servicios Firebase (Auth, Firestore, Storage)
-- [x] Notificaciones push
-- [x] Actualizaciones en tiempo real
+- **Mobile-First**: Optimizado para dispositivos móviles
+- **Consistencia**: Componentes reutilizables con estilos uniformes
+- **Accesibilidad**: Contraste adecuado y tamaños de texto legibles
+- **Feedback Visual**: Estados de carga, errores y éxito claros
 
-### 🚧 **En Desarrollo**
+### Tailwind CSS (NativeWind)
 
-- [ ] Creación de solicitudes de flete
-- [ ] Integración con Google Maps
-- [ ] Sistema de ofertas
-- [ ] Pagos con MercadoPago
+- **Utility-First**: Clases utilitarias para estilos rápidos
+- **Responsive**: Diseño adaptativo para diferentes pantallas
+- **Custom Components**: Componentes base con estilos consistentes
+
+## 🔐 Seguridad
+
+### Variables de Entorno
+
+- **Archivo .env**: Contiene credenciales sensibles
+- **Archivo .env.example**: Documenta las variables requeridas
+- **Validación**: Verificación automática de variables requeridas
+- **Gitignore**: El archivo .env está excluido del control de versiones
+
+### Firebase Security Rules
+
+- **Autenticación**: Usuarios solo pueden acceder a sus propios datos
+- **Validación**: Reglas de Firestore para validar datos
+- **Permisos**: Control granular de acceso a recursos
+
+### Datos Sensibles
+
+- **API Keys**: Configuradas en variables de entorno
+- **Información Personal**: Encriptada en tránsito
+- **Permisos**: Mínimos necesarios para funcionalidad
+
+## 🚀 Despliegue
+
+### Expo Build
+
+```bash
+# Para iOS
+expo build:ios
+
+# Para Android
+expo build:android
+```
+
+### EAS Build (Recomendado)
+
+```bash
+# Configurar EAS
+eas build:configure
+
+# Construir para producción
+eas build --platform all
+```
+
+## 📊 Estado del Proyecto
+
+### ✅ Completado
+
+- [x] Estructura base del proyecto
+- [x] Autenticación con Firebase
+- [x] Navegación completa
+- [x] **FreightRequestScreen** - Formulario completo de solicitudes
+- [x] Integración con Google Maps
+- [x] Cálculo automático de volumen
+- [x] Gestión de estado con Zustand
+- [x] Autenticación anónima
+- [x] Conversión de cuentas anónimas
+- [x] **Variables de entorno** configuradas
+
+### 🚧 En Desarrollo
+
+- [ ] Sistema de ofertas para conductores
+- [ ] Integración con MercadoPago
 - [ ] Seguimiento en tiempo real
 - [ ] Sistema de calificaciones
+- [ ] Notificaciones push
+- [ ] Modo offline
 
-### 📝 **Pendientes**
+### 📋 Pendiente
 
 - [ ] Chat entre usuarios
 - [ ] Reportes y analytics
 - [ ] Configuraciones avanzadas
-- [ ] Modo offline mejorado
+- [ ] Tests automatizados
+- [ ] Documentación completa
 
-## 🔥 **Firebase Security Rules**
-
-### **Firestore Rules**
-
-```javascript
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    // Users can read/write their own data
-    match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
-    }
-
-    // Freight requests
-    match /freightRequests/{requestId} {
-      allow read: if request.auth != null;
-      allow create: if request.auth != null;
-      allow update, delete: if request.auth != null &&
-        resource.data.consumerId == request.auth.uid;
-    }
-
-    // Offers
-    match /offers/{offerId} {
-      allow read, write: if request.auth != null;
-    }
-
-    // Jobs
-    match /jobs/{jobId} {
-      allow read, write: if request.auth != null &&
-        (resource.data.consumerId == request.auth.uid ||
-         resource.data.driverId == request.auth.uid);
-    }
-  }
-}
-```
-
-### **Storage Rules**
-
-```javascript
-rules_version = '2';
-service firebase.storage {
-  match /b/{bucket}/o {
-    // Profile pictures
-    match /profile-pictures/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
-    }
-
-    // Driver documents
-    match /driver-documents/{userId}/{documentType} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
-    }
-
-    // Freight request images
-    match /freight-requests/{requestId}/images/{imageIndex} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null;
-    }
-  }
-}
-```
-
-## 🎯 **Próximos Pasos**
-
-1. **Implementar creación de fletes** con formulario completo
-2. **Integrar Google Maps** para selección de ubicaciones
-3. **Desarrollar sistema de ofertas** para fleteros
-4. **Agregar MercadoPago** para pagos
-5. **Implementar seguimiento GPS** en tiempo real
-6. **Crear sistema de calificaciones** bidireccional
-
-## 🤝 **Contribución**
+## 🤝 Contribución
 
 1. Fork el proyecto
 2. Crear una rama para tu feature (`git checkout -b feature/AmazingFeature`)
@@ -317,14 +307,18 @@ service firebase.storage {
 4. Push a la rama (`git push origin feature/AmazingFeature`)
 5. Abrir un Pull Request
 
-## 📄 **Licencia**
+## 📄 Licencia
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para detalles.
 
-## 📞 **Soporte**
+## 📞 Soporte
 
-Para soporte técnico o preguntas sobre el proyecto, contacta al equipo de desarrollo.
+Para soporte técnico o preguntas:
+
+- Crear un issue en GitHub
+- Contactar al equipo de desarrollo
+- Revisar la documentación de Firebase y Expo
 
 ---
 
-**Fletero App** - Conectando consumidores con fleteros confiables en Argentina 🇦🇷
+**Fletero App** - Conectando Argentina, un flete a la vez 🚛

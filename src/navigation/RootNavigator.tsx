@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useAuthStore } from "../store/authStore";
 import AuthNavigator from "./AuthNavigator";
 import MainNavigator from "./MainNavigator";
-import FreightRequestScreen from "../screens/FreightRequestScreen";
+import FreightRequestScreen from "../screens/consumer/FreightRequestScreen";
 import RequestDetailsScreen from "../screens/RequestDetailsScreen";
 import OfferDetailsScreen from "../screens/OfferDetailsScreen";
 import JobDetailsScreen from "../screens/JobDetailsScreen";
@@ -13,16 +13,24 @@ import LoadingScreen from "../screens/LoadingScreen";
 const Stack = createNativeStackNavigator();
 
 export default function RootNavigator() {
-  const { isAuthenticated, isLoading } = useAuthStore();
+  const { isAuthenticated, isInitialized, isLoading } = useAuthStore();
 
-  if (isLoading) {
+  // Show loading screen while auth is being initialized
+  if (!isInitialized || isLoading) {
     return <LoadingScreen />;
   }
+
+  console.log("RootNavigator - Auth state:", {
+    isAuthenticated,
+    isInitialized,
+    isLoading,
+  });
 
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
+        animation: "slide_from_right",
       }}
     >
       {!isAuthenticated ? (
@@ -33,22 +41,22 @@ export default function RootNavigator() {
           <Stack.Screen
             name="FreightRequest"
             component={FreightRequestScreen}
-            options={{ headerShown: true, title: "Nuevo Flete" }}
+            options={{ headerShown: true, title: "Nueva Solicitud de Flete" }}
           />
           <Stack.Screen
             name="RequestDetails"
             component={RequestDetailsScreen}
-            options={{ headerShown: true, title: "Detalles del Flete" }}
+            options={{ headerShown: true, title: "Detalles de Solicitud" }}
           />
           <Stack.Screen
             name="OfferDetails"
             component={OfferDetailsScreen}
-            options={{ headerShown: true, title: "Detalles de la Oferta" }}
+            options={{ headerShown: true, title: "Detalles de Oferta" }}
           />
           <Stack.Screen
             name="JobDetails"
             component={JobDetailsScreen}
-            options={{ headerShown: true, title: "Detalles del Trabajo" }}
+            options={{ headerShown: true, title: "Detalles de Trabajo" }}
           />
           <Stack.Screen
             name="LocationPicker"

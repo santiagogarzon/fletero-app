@@ -56,4 +56,8 @@ export const getPreferredDateRange = (): { start: Date; end: Date } => {
   const start = dayjs().startOf('day').toDate();
   const end = dayjs().add(30, 'days').endOf('day').toDate();
   return { start, end };
+};
+
+export const formatTime = (date: Date | string): string => {
+  return dayjs(date).format('HH:mm');
 }; 

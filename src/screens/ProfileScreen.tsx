@@ -9,7 +9,8 @@ import Card from "../components/Card";
 
 export default function ProfileScreen() {
   const navigation = useNavigation();
-  const { user, signOut, isLoading } = useAuthStore();
+  const { user, signOut, isLoading, isAuthenticated, isInitialized } =
+    useAuthStore();
 
   const handleSignOut = async () => {
     Alert.alert(
@@ -36,6 +37,18 @@ export default function ProfileScreen() {
     (navigation as any).navigate("ConvertAnonymous");
   };
 
+  const handleTestPersistentLogin = () => {
+    Alert.alert(
+      "Estado de Autenticación",
+      `Autenticado: ${isAuthenticated ? "Sí" : "No"}\n` +
+        `Inicializado: ${isInitialized ? "Sí" : "No"}\n` +
+        `Usuario: ${user?.name || "Ninguno"}\n` +
+        `Email: ${user?.email || "N/A"}\n` +
+        `Anónimo: ${user?.isAnonymous ? "Sí" : "No"}`,
+      [{ text: "OK" }]
+    );
+  };
+
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
       <ScrollView className="flex-1">
@@ -59,6 +72,49 @@ export default function ProfileScreen() {
               </View>
             )}
           </View>
+
+          {/* Authentication Status */}
+          <Card className="mb-6">
+            <View className="flex-row items-center justify-between mb-4">
+              <Text className="text-lg font-semibold text-gray-900">
+                Estado de Autenticación
+              </Text>
+              <TouchableOpacity onPress={handleTestPersistentLogin}>
+                <Ionicons name="information-circle" size={24} color="#3b82f6" />
+              </TouchableOpacity>
+            </View>
+
+            <View className="space-y-2">
+              <View className="flex-row items-center justify-between">
+                <Text className="text-gray-700">Estado:</Text>
+                <Text
+                  className={`font-medium ${
+                    isAuthenticated ? "text-green-600" : "text-red-600"
+                  }`}
+                >
+                  {isAuthenticated ? "Autenticado" : "No autenticado"}
+                </Text>
+              </View>
+
+              <View className="flex-row items-center justify-between">
+                <Text className="text-gray-700">Inicializado:</Text>
+                <Text
+                  className={`font-medium ${
+                    isInitialized ? "text-green-600" : "text-yellow-600"
+                  }`}
+                >
+                  {isInitialized ? "Sí" : "No"}
+                </Text>
+              </View>
+
+              <View className="flex-row items-center justify-between">
+                <Text className="text-gray-700">Tipo de cuenta:</Text>
+                <Text className="font-medium text-gray-900">
+                  {user?.isAnonymous ? "Anónima" : "Completa"}
+                </Text>
+              </View>
+            </View>
+          </Card>
 
           {/* Anonymous User Notice */}
           {user?.isAnonymous && (
