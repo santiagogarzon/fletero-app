@@ -76,6 +76,7 @@ export interface Location {
 export interface FreightItem {
   type: string;
   quantity: number;
+  size?: 'small' | 'medium' | 'large'; // for boxes
   description?: string;
   volume?: number; // in m³
 }

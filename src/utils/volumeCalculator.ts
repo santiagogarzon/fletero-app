@@ -8,8 +8,26 @@ export interface VolumeEstimate {
 export const ITEM_VOLUMES: Record<string, VolumeEstimate> = {
   box: {
     type: 'Caja',
-    averageVolume: 0.05, // 50L
+    averageVolume: 0.05, // 50L - default for medium boxes
     minVolume: 0.02, // 20L
+    maxVolume: 0.1, // 100L
+  },
+  'box-small': {
+    type: 'Caja Pequeña',
+    averageVolume: 0.03, // 30L
+    minVolume: 0.02, // 20L
+    maxVolume: 0.04, // 40L
+  },
+  'box-medium': {
+    type: 'Caja Mediana',
+    averageVolume: 0.05, // 50L
+    minVolume: 0.04, // 40L
+    maxVolume: 0.06, // 60L
+  },
+  'box-large': {
+    type: 'Caja Grande',
+    averageVolume: 0.08, // 80L
+    minVolume: 0.06, // 60L
     maxVolume: 0.1, // 100L
   },
   fridge: {
@@ -23,6 +41,12 @@ export const ITEM_VOLUMES: Record<string, VolumeEstimate> = {
     averageVolume: 0.3, // 300L
     minVolume: 0.2, // 200L
     maxVolume: 0.5, // 500L
+  },
+  mattress: {
+    type: 'Colchón',
+    averageVolume: 0.2, // 200L
+    minVolume: 0.15, // 150L
+    maxVolume: 0.3, // 300L
   },
   table: {
     type: 'Mesa',
@@ -50,17 +74,25 @@ export const ITEM_VOLUMES: Record<string, VolumeEstimate> = {
   },
 };
 
-export const calculateTotalVolume = (items: Array<{ type: string; quantity: number }>): number => {
+export const calculateTotalVolume = (items: Array<{ type: string; quantity: number; size?: 'small' | 'medium' | 'large' }>): number => {
   return items.reduce((total, item) => {
-    const volumeEstimate = ITEM_VOLUMES[item.type];
-    if (volumeEstimate) {
-      return total + (volumeEstimate.averageVolume * item.quantity);
+    let volumeEstimate: VolumeEstimate;
+    
+    // Handle boxes with different sizes
+    if (item.type === 'box' && item.size) {
+      volumeEstimate = ITEM_VOLUMES[`box-${item.size}`] || ITEM_VOLUMES.box;
+    } else {
+      volumeEstimate = ITEM_VOLUMES[item.type] || ITEM_VOLUMES.other;
     }
-    return total + (ITEM_VOLUMES.other.averageVolume * item.quantity);
+    
+    return total + (volumeEstimate.averageVolume * item.quantity);
   }, 0);
 };
 
-export const getVolumeEstimate = (type: string): VolumeEstimate => {
+export const getVolumeEstimate = (type: string, size?: 'small' | 'medium' | 'large'): VolumeEstimate => {
+  if (type === 'box' && size) {
+    return ITEM_VOLUMES[`box-${size}`] || ITEM_VOLUMES.box;
+  }
   return ITEM_VOLUMES[type] || ITEM_VOLUMES.other;
 };
 

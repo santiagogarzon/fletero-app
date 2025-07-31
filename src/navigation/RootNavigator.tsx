@@ -41,7 +41,7 @@ export default function RootNavigator() {
           <Stack.Screen
             name="FreightRequest"
             component={FreightRequestScreen}
-            options={{ headerShown: true, title: "Nueva Solicitud de Flete" }}
+            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="RequestDetails"

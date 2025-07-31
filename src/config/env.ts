@@ -1,9 +1,7 @@
-import { GOOGLE_MAPS_API_KEY } from '@env';
-
 // Environment variables configuration
 export const ENV = {
   // Google Maps
-  GOOGLE_MAPS_API_KEY: GOOGLE_MAPS_API_KEY,
+  GOOGLE_MAPS_API_KEY: 'AIzaSyBvA8PdrQWD1nPeFoRB-H3cHP81HOgCmog',
 
   // App Configuration
   APP_NAME: 'Fletero App',
