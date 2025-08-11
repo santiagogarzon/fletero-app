@@ -1,6 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
+import FleteHomeScreen from "../screens/driver/FleteHomeScreen";
 import AvailableRequestsScreen from "../screens/driver/AvailableRequestsScreen";
 import MyJobsScreen from "../screens/driver/MyJobsScreen";
 import EarningsScreen from "../screens/driver/EarningsScreen";
@@ -16,7 +17,9 @@ export default function DriverNavigator() {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName: keyof typeof Ionicons.glyphMap;
 
-          if (route.name === "AvailableRequests") {
+          if (route.name === "Home") {
+            iconName = focused ? "home" : "home-outline";
+          } else if (route.name === "AvailableRequests") {
             iconName = focused ? "search" : "search-outline";
           } else if (route.name === "MyJobs") {
             iconName = focused ? "car" : "car-outline";
@@ -43,6 +46,11 @@ export default function DriverNavigator() {
         headerShown: false,
       })}
     >
+      <Tab.Screen
+        name="Home"
+        component={FleteHomeScreen}
+        options={{ title: "Inicio" }}
+      />
       <Tab.Screen
         name="AvailableRequests"
         component={AvailableRequestsScreen}

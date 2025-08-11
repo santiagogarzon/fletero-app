@@ -32,8 +32,9 @@ export type ConsumerTabParamList = {
 };
 
 export type DriverTabParamList = {
+  Home: undefined;
   AvailableRequests: undefined;
   MyJobs: undefined;
   Earnings: undefined;
   Profile: undefined;
-}; 
+};
